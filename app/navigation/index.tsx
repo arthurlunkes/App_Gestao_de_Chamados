@@ -9,7 +9,7 @@ export default function StackNavigator() {
         <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{
-                headerShown: true
+                headerShown: false
             }}
         >
             <Stack.Screen name="TicketPanel" component={TicketPanel} />

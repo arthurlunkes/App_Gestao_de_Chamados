@@ -1,19 +1,26 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, useColorScheme } from 'react-native';
 
 const Home: React.FC = (props: any) => {
+    const colorScheme = useColorScheme();
+
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
             <View style={styles.main}>
                 <Text style={{
+                    color: colorScheme === 'dark' ? 'white' : 'black',
                     fontWeight: 'bold',
                     fontSize: 64
                 }}>Bem-vindo</Text>
-                <Text style={{fontSize: 36}}>Nosso app para gestão de chamados!</Text>
+                <Text style={{
+                    color: colorScheme === 'dark' ? 'white' : 'black',
+                    fontSize: 36
+                }}>Nosso app para gestão de chamados!</Text>
                 <View style={styles.spaceBtn}>
                     <Pressable
+                        style={{...styles.btn, backgroundColor: colorScheme === 'dark' ? 'white' : 'black'}}
                         onPress={() => props.navigation.navigate('TicketPanel')}
                     >
-                        <Text style={styles.btn}>Chamados</Text>
+                        <Text style={{ ...styles.txtBtn, color: colorScheme === 'dark' ? 'black' : 'white'}}>Chamados</Text>
                     </Pressable>
                 </View>
             </View>
@@ -48,13 +55,15 @@ const styles = StyleSheet.create({
     btn: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'white',
         padding: 16,
         borderRadius: 8,
-        backgroundColor: 'black',
-        textAlign: 'center',
-        textAlignVertical: 'center',
         height: 64,
         width: 230
+    },
+    txtBtn: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textAlignVertical: 'center'
     }
 })
