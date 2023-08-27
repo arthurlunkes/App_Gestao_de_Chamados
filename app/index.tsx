@@ -1,8 +1,11 @@
-import { Text, SafeAreaView } from "react-native";
-import Routes from "./navigation";
+import {SafeAreaView, View} from "react-native";
+import Routes from "./navigation/Stack";
+import Tabs from "./navigation/Tabs";
 
 export default function Page() {
   return (
-      <Routes />
-  );
+    <SafeAreaView style={{flex: 1}}>
+      <Tabs />
+    </SafeAreaView>
+  )
 }

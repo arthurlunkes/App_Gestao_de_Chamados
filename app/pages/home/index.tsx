@@ -4,7 +4,7 @@ const Home: React.FC = (props: any) => {
     const colorScheme = useColorScheme();
 
     return (
-        <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
+        <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? '#0f0f0f' : 'white'}}>
             <View style={styles.main}>
                 <Text style={{
                     color: colorScheme === 'dark' ? 'white' : 'black',
