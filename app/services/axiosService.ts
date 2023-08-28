@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://192.168.18.65:8080";
+axios.defaults.baseURL = "http://192.168.1.14:8080";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export const request =  (method: string, url: string, data?: any, headers?: any) => {

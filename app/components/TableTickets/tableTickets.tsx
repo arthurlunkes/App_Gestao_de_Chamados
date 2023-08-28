@@ -24,8 +24,6 @@ interface Ticket {
 
 const tableTickets: React.FC = ( props ) => {
     const theme = useColorScheme();
-    const [ year, setYear ] = useState(0);
-    const [ month, setMonth ] = useState(0);
     const [ tickets, setTickets ] = useState<Ticket[]>([]);
     const tableHead: string[] = ['ID', 'Título', 'Data de abertura', 'Data de fechamento', 'Cliente', 'Módulo'];
 
@@ -49,7 +47,7 @@ const tableTickets: React.FC = ( props ) => {
                 <ScrollView>
                     {
                         tickets.map((ticket, index) => (
-                            <TableWrapper key={index} style={{...styles.row, backgroundColor: theme === 'dark' ? '#ccc' : 'black'}}>
+                            <TableWrapper key={index} style={{...styles.row, backgroundColor: theme === 'dark' ? '#ccc' : '#bbb'}}>
                                 <Cell data={ticket.id} textStyle={styles.text}/>
                                 <Cell data={ticket.title} textStyle={styles.text}/>
                                 <Cell data={formatDate(ticket.dateOpen)} textStyle={styles.text}/>
@@ -68,14 +66,22 @@ const tableTickets: React.FC = ( props ) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: 380,
         backgroundColor: '#fff',
-        marginTop: 40,
+        height: '100%',
         marginBottom: 50
     },
-    head: { height: 50, backgroundColor: '#808B97' },
-    text: { margin: 6, textAlign: 'center', fontSize: 16 },
-    row: { flexDirection: 'row' },
+    head: {
+        height: 50,
+        backgroundColor: '#808B97'
+    },
+    text: {
+        margin: 6,
+        textAlign: 'center',
+        fontSize: 16
+    },
+    row: {
+        flexDirection: 'row'
+    },
 });
 
 export default tableTickets;
