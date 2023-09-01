@@ -3,6 +3,7 @@ import Home from "../pages/home";
 import TicketPanel from "../pages/ticketPanel";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useColorScheme } from "react-native";
+import PanelTickets from "../pages/panelTickets/PanelTickets";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,9 +29,12 @@ export default function App() {
                         iconName = focused
                             ? 'bar-chart'
                             : 'bar-chart-outline';
+                    } else if (route.name === 'PanelTickets') {
+                        iconName = focused
+                            ? 'pie'
+                            : 'pie-outline';
                     }
 
-                    // You can return any component that you like here!
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: 'tomato',
@@ -39,6 +43,7 @@ export default function App() {
         >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="TicketPanel" component={TicketPanel} />
+            <Tab.Screen name="PanelTickets" component={PanelTickets} />
         </Tab.Navigator>
     );
 }

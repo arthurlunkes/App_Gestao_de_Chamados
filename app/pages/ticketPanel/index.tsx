@@ -1,37 +1,73 @@
 import React, { useState, useEffect } from "react";
 import {StyleSheet, Text, View, useColorScheme, Modal, Pressable} from "react-native";
 import TableTickets from "../../components/TableTickets/tableTickets";
-import {getClients} from "../../services/axiosService";
+import { getClients,
+    getModules,
+    getTickets,
+    getTicket,
+    createTicket,
+    updateTicket,
+    deleteTicket } from "../../services/axiosService";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-interface client {
+interface Client {
     id: number;
     name: string;
+}
+
+interface Module {
+    id: number;
+    name: string;
+}
+
+interface Ticket {
+    id: number;
+    title: string;
+    dateOpen: string;
+    dateClose: string;
+    client: Client;
+    module: Module;
 }
 
 const TicketPanel: React.FC = (props) => {
     const theme = useColorScheme();
     const [ modalVisible, setModalVisible ] = useState(false);
-    const [ clients, setClients ] = useState<client[]>([]);
-    const [ listClients, setListClients ] = useState<client[]>([]);
-    const [ clientsConvidados, setClientsConvidados ] = useState<client[]>([]);
+    const [ clients, setClients ] = useState<Client[]>([]);
+    const [ modules, setModules ] = useState<Module[]>([]);
+    const [ tickets, setTickets ] = useState<Ticket[]>([]);
+    const [ listClients, setListClients ] = useState<Client[]>([]);
+    const [ clientsConvidados, setClientsConvidados ] = useState<Client[]>([]);
 
     useEffect(() => {
         getClients().then((response) => {
+            console.warn(response.data);
             setClients(response.data);
         }).catch((error) => {
             console.warn("erro: ", error.message);
         })
-    }, []);
+
+        getTickets().then((response) => {
+            setTickets(response.data);
+        }).catch((error) => {
+            console.warn("erro: ", error.message);
+        })
+
+        getModules().then().then((response) => {
+            setModules(response.data);
+        }).catch((error) => {
+            console.warn("erro: ", error.message);
+        })
+
+    });
 
     const getClientById = (id: number) => {
-        const client: client | undefined = clients.find((client) => client.id === id);
+        const client: Client | undefined = clients.find((client) => client.id === id);
         return client;
     }
 
     const insertOrRemoveFromListClients = (id: number, isChecked: boolean) => {
         if (isChecked) {
-            const updatedList: (client | undefined)[] = [...listClients, getClientById(id)];
+            const updatedList: (Client | undefined)[] = [...listClients, getClientById(id)];
             // @ts-ignore
             setListClients(updatedList);
             console.warn(updatedList);
@@ -80,15 +116,23 @@ const TicketPanel: React.FC = (props) => {
                         </View>
                     </View>
                 </Modal>
-                <Pressable
-                    style={{...styles.btn, backgroundColor: theme === 'dark' ? 'white' : 'black'}}
-                    onPress={() => setModalVisible(true)}
-                >
-                    <Text style={{ ...styles.subtitle, color: theme === 'dark' ? 'black' : 'white'}}>Clientes</Text>
-                </Pressable>
+
+                <View style={{alignItems: 'center'}}>
+                    <Pressable
+                        style={{...styles.btn, backgroundColor: theme === 'dark' ? 'white' : 'black'}}
+                        onPress={() => setModalVisible(true)}
+                    >
+                        <Text style={{ ...styles.subtitle, color: theme === 'dark' ? 'black' : 'white'}}>Clientes</Text>
+                    </Pressable>
+                </View>
+
 
                 <View style={styles.tableView}>
-                    <TableTickets />
+                    <TableTickets
+                        Tickets={tickets}
+                        Clients={clients}
+                        Modules={modules}
+                    />
                 </View>
 
             </View>
@@ -107,6 +151,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 35,
         fontWeight: "bold",
+        marginBottom: 10,
     },
     subtitle: {
         fontSize: 30,
